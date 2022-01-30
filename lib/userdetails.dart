@@ -1,6 +1,5 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import '/models/game.api.dart';
 import './models/game.dart';
 import 'controller/auth_controller.dart';
 
@@ -13,43 +12,19 @@ class UserDetails extends StatefulWidget {
 
 class _UserDetailsState extends State<UserDetails> {
   List<Game> _games = <Game>[];
-
-  Future<List<Game>> fetchUserDetails() async {
-    var url = Uri.parse(
-        "http://tournaments-dot-game-tv-prod.uc.r.appspot.com/tournament/api/tournaments_list_v2?limit=10&status=all");
-    var response = await http.get(url);
-    var data = json.decode(response.body);
-
-    // var games = <Game>[];
-    List _temp = [];
-
-    for (var i in data['data']['tournaments']) {
-      _temp.add(i);
-    }
-
-    return Game.gamesFromSnapshot(_temp);
-
-    // if (response.statusCode == 200) {
-    //   var gamesJson = json.decode(response.body);
-    //   for (var gameJson in gamesJson) {
-    //     games.add(Game.fromJson(gameJson));
-    //   }
-    // } else {
-    //   // If the server did not return a 200 OK response,
-    //   // then throw an exception.
-    //   throw Exception('Failed to load album');
-    // }
-    // return games;
-  }
+  bool _isLoading = true;
 
   @override
   void initState() {
-    fetchUserDetails().then((value) {
-      setState(() {
-        _games.addAll(value);
-      });
-    });
     super.initState();
+    fetchUserDetails();
+  }
+
+  Future<void> fetchUserDetails() async {
+    _games = await GameApi.getGame();
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override

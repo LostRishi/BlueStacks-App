@@ -48,17 +48,12 @@ class _LoginPageState extends State<LoginPage> {
       return "* Required";
     } else if (value.length < 3) {
       btnEnabled = false;
-      // print(
-      //     "Login Button while entering username in wrong format is: $userNameBtnEnabled");
       return "Username should be atleast 3 characters";
     } else if (value.length > 11) {
       btnEnabled = false;
       return "Username should not be greater than 11 characters";
     }
     btnEnabled = true;
-    // setState(() => this._btnEnabled = !_btnEnabled);
-    // print(
-    //     "Login Button while entering username in correct format is: $userNameBtnEnabled");
     return null;
   }
 
@@ -68,17 +63,12 @@ class _LoginPageState extends State<LoginPage> {
       return "* Required";
     } else if (value.length < 3) {
       btnEnabled = false;
-      // print(
-      //     "Login Button while entering password in wrong format is: $passwordBtnEnabled");
       return "Password should be atleast 3 characters";
     } else if (value.length > 11) {
       btnEnabled = false;
       return "Password should not be greater than 11 characters";
     }
-    // setState(() => this._btnEnabled = !_btnEnabled);
     btnEnabled = true;
-    // print(
-    //     "Login Button while entering password in correct format is: $passwordBtnEnabled");
     return null;
   }
 
@@ -113,7 +103,6 @@ class _LoginPageState extends State<LoginPage> {
                               controller: usernameController,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
-                              // autovalidate: true,
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   labelText: "Username"),
@@ -128,7 +117,6 @@ class _LoginPageState extends State<LoginPage> {
                                 obscureText: isHiddenPassword,
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
-                                // autovalidate: true,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   labelText: "Password",
@@ -155,7 +143,6 @@ class _LoginPageState extends State<LoginPage> {
                                   String password = passwordController.text;
                                   if (credentials.containsKey(username) &&
                                       credentials[username] == password) {
-                                    // AuthController.login({username: password});
                                     AuthController.login(username);
                                     Navigator.pushNamed(context, 'userdetails');
                                   } else {
