@@ -1,15 +1,22 @@
 class Game {
-  final String? cover_url;
-  final String? name;
-  final String? game_name;
+  final String cover_url;
+  final String name;
+  final String game_name;
 
-  Game({this.cover_url, this.name, this.game_name});
+  Game({required this.cover_url, required this.name, required this.game_name});
+
+  // Game.fromJson(Map<String, dynamic> json) {
+  //   cover_url = json['data']['tournaments']['cover_url'];
+  //   name = json['data']['tournaments']['name'];
+  //   game_name = json['data']['tournaments']['game_name'];
+  // }
 
   factory Game.fromJson(dynamic json) {
     return Game(
-        cover_url: json['tournaments']['cover_url'] as String,
-        name: json['tournaments']['name'] as String,
-        game_name: json['tournaments']['game_name'] as String);
+      cover_url: json['cover_url'] as String,
+      name: json['name'] as String,
+      game_name: json['game_name'] as String,
+    );
   }
 
   static List<Game> gamesFromSnapshot(List snapshot) {

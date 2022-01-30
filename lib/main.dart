@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         future: authController.tryAutoLogin(),
         builder: (context, authResult) {
           if (authResult.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator(
+            return const CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.red));
           } else {
             if (authResult.data == true) {

@@ -1,22 +1,21 @@
 import 'dart:convert';
-import './game.dart';
-import 'package:helloapp/models/game.dart';
 import 'package:http/http.dart' as http;
+import './game.dart';
+import '/models/game.dart';
 
 class GameApi {
   static Future<List<Game>> getGame() async {
-    var uri = Uri.http('http://tournaments-dot-game-tv-prod.uc.r.appspot.com/',
-        'tournament/api/tournaments_list_v2', {"limit": "10", "status": "all"});
+    var url = Uri.parse(
+        "http://tournaments-dot-game-tv-prod.uc.r.appspot.com/tournament/api/tournaments_list_v2?limit=10&status=all");
+    var response = await http.get(url);
+    var data = json.decode(response.body);
 
-    final response = await http.get(uri, headers: {"useQueryString": "true"});
+    List _games = [];
 
-    Map data = jsonDecode(response.body);
-    List _temp = [];
-
-    for (var i in data['data']['tournaments']) {
-      _temp.add(i['content']['details']);
+    for (var tournament in data['data']['tournaments']) {
+      _games.add(tournament);
     }
 
-    return Game.gamesFromSnapshot(_temp);
+    return Game.gamesFromSnapshot(_games);
   }
 }
